@@ -1,0 +1,50 @@
+<!-- Include Phaser Framework via CDN -->
+<!DOCTYPE html>
+<html>
+ 
+    <head>
+        <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico"/>
+        <link rel="stylesheet" type="text/css" href="stylesheets/style.css"/>
+        <link rel="stylesheet" type="text/css" href="stylesheets/animation-style.css"/>
+        <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Russo+One&display=swap" rel="stylesheet">
+        <meta charset="utf-8">
+    </head>
+ 
+    <body>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.17.0/phaser.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script type="module" src="javascript/launcher.js"></script>
+
+        <!-- Content -->
+        <div class="wrapper">
+            <div id="game-canvas">
+                <div id="phaser-canvas">
+                    <div class="login-screen-interface">
+                        <div class="game-title">
+                            <h2> Outside of Time </h2>
+                        </div>
+                        <div class="login-text-box login">
+                            <label for="login-name"></label>
+                            <input id="login-name" placeholder="Username" type="text" name="text-box" />
+                        </div>
+                        <div class="login-text-button login">
+                            <button id="login-button"> Join Game </button>
+                        </div>
+                    </div>
+                    <div class="chat-container">
+                        <div class="chat-log-wrapper">
+                            <div class="chat-log"></div>
+                        </div>
+                        <div class="text-box-div">
+                            <label for="text-box"></label>
+                            <input id="text-box" type="text" name="text-box" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

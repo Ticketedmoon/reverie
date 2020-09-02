@@ -7,13 +7,13 @@ export default class Game {
         this.config = {
             type: Phaser.AUTO,
             parent: 'phaser-canvas',
-            width: 835,
+            width: 800,
             height: 600,
             url: "https://online-space-game-by-shane.herokuapp.com/",
             version: "0.0.2",
             fps: 30,
             scale: {
-                autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
+                autoCenter: Phaser.Scale.FIT
             },
     
             // Physics

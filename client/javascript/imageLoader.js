@@ -1,26 +1,17 @@
 export default class ImageLoader {
 
     loadAnimationImageSets(self) {
-        // this.loadBackgroundAnimationImageSet(self);
+        this.loadBackgroundAnimationImageSet(self);
         this.loadLaunchAnimationImageSet(self);
         this.loadBoostAnimationImageSet(self);
         this.loadLaserImageSet(self);
         this.loadAmmoImageSet(self);
     }
-/*
-    loadBackgroundAnimationImageSet(self) {
-        self.load.path = 'assets/background/';
 
-        // background animation sprites
-        self.load.image('background_anim_1', 'background_0.png');
-        self.load.image('background_anim_2', 'background_1.png');
-        self.load.image('background_anim_3', 'background_2.png');
-        self.load.image('background_anim_4', 'background_3.png');
-        self.load.image('background_anim_5', 'background_4.png');
-        self.load.image('background_anim_6', 'background_5.png');
-        self.load.image('background_anim_7', 'background_6.png');
-        self.load.image('background_anim_8', 'background_7.png');
-    }*/
+    loadBackgroundAnimationImageSet(self) {
+        self.load.path = 'assets/resources/background/';
+        self.load.image('background', 'background-X.jpg');
+    }
 
     loadLaunchAnimationImageSet(self) {
         self.load.path = 'assets/player/';

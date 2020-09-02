@@ -24,6 +24,7 @@ export default class GameScene extends Phaser.Scene {
     create() {
         // Store this keyword for later callbacks.
         const self = this;
+        this.game.world.setBounds(0, 0, 1920, 1920);
 
         // Setup socket for each client
         this.socket = io();
@@ -37,14 +38,11 @@ export default class GameScene extends Phaser.Scene {
         this.otherPlayers.enableBody = true;
 
         this.otherPlayerBullets = this.add.group();
-
         // Lasers shot by players
         this.animationManager.initializeAnimationGroup(this);
         // Set background
-/*        this.background = this.physics.add.sprite(0, 0, 'background_anim_1')
-            .setOrigin(0, 0).setScale(2, 2)
-            .play('load');*/
-
+        this.background = this.add.image(0, 0, "background")
+            .setOrigin(0, 0);
         // Emit to server to start the socket connection to server
         this.socket.emit('initializeSocketConnection', this.userName);
 
@@ -53,6 +51,8 @@ export default class GameScene extends Phaser.Scene {
             Object.keys(players).forEach(function (id) {
                 if (players[id].playerId === self.socket.id) {
                     self.networkManager.addPlayer(self, id, players[id]);
+                    self.cameras.main.setBounds(0, 0, 2000, self.background.displayHeight);
+                    self.cameras.main.startFollow(self.networkManager.ship);
                 }
                 else {
                     self.networkManager.addOtherPlayer(self, id, players[id]);

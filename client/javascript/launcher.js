@@ -1,8 +1,9 @@
-import Game from './game.js';
+import GameConfig from './gameConfig.js';
 
 class Launcher {
     initialize() {
-        let game = new Game();
+        let config = new GameConfig().getConfig();
+        this.game = new Phaser.Game(config);
     }
 }
 

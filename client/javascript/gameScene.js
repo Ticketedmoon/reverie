@@ -24,7 +24,6 @@ export default class GameScene extends Phaser.Scene {
     create() {
         // Store this keyword for later callbacks.
         const self = this;
-        this.game.world.setBounds(0, 0, 1920, 1920);
 
         // Setup socket for each client
         this.socket = io();
@@ -37,12 +36,10 @@ export default class GameScene extends Phaser.Scene {
         this.otherPlayers = this.physics.add.group();
         this.otherPlayers.enableBody = true;
 
-        this.otherPlayerBullets = this.add.group();
-        // Lasers shot by players
         this.animationManager.initializeAnimationGroup(this);
         // Set background
         this.background = this.add.image(0, 0, "background")
-            .setOrigin(0, 0);
+            .setOrigin(0, 0.1);
         // Emit to server to start the socket connection to server
         this.socket.emit('initializeSocketConnection', this.userName);
 
@@ -52,7 +49,7 @@ export default class GameScene extends Phaser.Scene {
                 if (players[id].playerId === self.socket.id) {
                     self.networkManager.addPlayer(self, id, players[id]);
                     self.cameras.main.setBounds(0, 0, 2000, self.background.displayHeight);
-                    self.cameras.main.startFollow(self.networkManager.ship);
+                    self.cameras.main.startFollow(self.networkManager.player);
                 }
                 else {
                     self.networkManager.addOtherPlayer(self, id, players[id]);
@@ -92,43 +89,15 @@ export default class GameScene extends Phaser.Scene {
                 }
             });
         });
-
-        this.socket.on('bulletFired', function (bulletData) {
-            self.networkManager.spawn_projectile(self, bulletData, 1, 1);
-        });
-
-        this.socket.on('meteorFired', function (meteorData) {
-            self.networkManager.spawn_projectile(self, meteorData, 3, 3);
-        });
-
         // Initialize default ship cursor key inputs
         this.cursors = this.input.keyboard.addKeys('up, down, left, right, shift');
-
-        // Initialize Meteor Strike function @Letter keys with Phaser
-        this.input.keyboard.on('keydown_C', function(event) {
-            self.networkManager.ship.fire_meteor_shot(self);
-        });
-
-        // Initialize Fire function @Letter keys with Phaser
-        this.input.keyboard.on('keydown_X', function(event) {
-            self.networkManager.ship.fire_laser(self);
-        });
-
-        // Initialize Reload function @Letter keys with Phaser
-        this.input.keyboard.on('keydown_R', function(event) {
-            self.networkManager.ship.reload();
-        });
-
     }
 
     update() {
         // Check the ship has been instantiated
-        if (this.networkManager.ship) {
-            this.networkManager.checkForShipMovement(this);
+        if (this.networkManager.player) {
+            this.networkManager.checkForPlayerMovement(this);
             this.networkManager.publishPlayerMovement(this);
-
-            // TODO: Refactor - does this NEED to be in update loop?
-            this.networkManager.checkForCollisions(this);
         }
     }
 }

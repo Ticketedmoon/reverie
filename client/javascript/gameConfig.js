@@ -1,36 +1,33 @@
 import LoginScene from './loginScene.js';
 import GameScene from './gameScene.js';
 
-export default class Game {
+export default class GameConfig {
 
-    constructor() {
-        this.config = {
+    getConfig() {
+        return {
             type: Phaser.AUTO,
             parent: 'phaser-canvas',
             width: 800,
             height: 600,
-            url: "https://online-space-game-by-shane.herokuapp.com/",
+            url: null,
             version: "0.0.2",
             fps: 30,
             scale: {
                 autoCenter: Phaser.Scale.FIT
             },
-    
-            // Physics
+
             physics: {
                 default: 'arcade',
                 arcade: {
                     debug: false,
-                    gravity: { x: 0, y: 0 }
+                    gravity: {x: 0, y: 0}
                 }
             },
 
             scene: [
-                LoginScene, 
+                LoginScene,
                 GameScene
             ],
         };
-        
-        this.game = new Phaser.Game(this.config);
     }
 }

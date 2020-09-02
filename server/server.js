@@ -37,10 +37,9 @@ io.on('connection', function (socket) {
         rotation: 0,
         playerId: socket.id,
         colour: colours[0].random(),
-        x: Math.floor(Math.random() * 700) + 50,
-        y: Math.floor(Math.random() * 500) + 50,
-        team: (Math.random() > 0.5) ? 'red' : 'blue',
-        thrustersActive: false
+        x: 0,
+        y: 800,
+        team: (Math.random() > 0.5) ? 'red' : 'blue'
     };
 
     socket.on('initializeSocketConnection', function(userName) {
@@ -67,18 +66,9 @@ io.on('connection', function (socket) {
         players[socket.id].x = movementData.x;
         players[socket.id].y = movementData.y;
         players[socket.id].rotation = movementData.rotation;
-        players[socket.id].boostActive = movementData.boostActive
-        
+
         // emit a message to all players about the player that moved
         socket.broadcast.emit('playerMoved', players[socket.id]);
-    });
-
-    socket.on('bulletFired', function(bulletData) {
-        socket.broadcast.emit('bulletFired', bulletData);
-    });
-
-    socket.on('meteorFired', function(meteorData) {
-        socket.broadcast.emit('meteorFired', meteorData);
     });
 
     socket.on('chatUpdate', function(message, playerId) {

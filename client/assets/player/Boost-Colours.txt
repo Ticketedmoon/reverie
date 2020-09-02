@@ -1,3 +1,0 @@
-Outer Rim: ff9900
-Middle Rim: ffd900
-Inner Rim: f6ff00 

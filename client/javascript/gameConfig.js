@@ -7,7 +7,7 @@ export default class GameConfig {
         return {
             type: Phaser.AUTO,
             parent: 'phaser-canvas',
-            width: 800,
+            width: 1200,
             height: 600,
             url: null,
             version: "0.0.2",

@@ -14,10 +14,10 @@ export default class NetworkManager {
 
     checkForPlayerMovement(scene) {
         if (scene.cursors.left.isDown) {
-            scene.physics.velocityFromRotation(this.player.rotation + 270, -50, this.player.body.acceleration);
+            this.player.moveLeft(scene);
         }
         if (scene.cursors.right.isDown) {
-            scene.physics.velocityFromRotation(this.player.rotation + 270, 50, this.player.body.acceleration);
+            this.player.moveRight(scene);
         }
 
         if (scene.cursors.up.isDown && !this.player.isJumping()) {
@@ -29,7 +29,7 @@ export default class NetworkManager {
         }
 
         if (!scene.cursors.left.isDown && !scene.cursors.right.isDown && !scene.cursors.up.isDown && !scene.cursors.down.isDown) {
-            this.player.body.setAcceleration(0);
+            this.player.showIdleAnimation();
         }
         this.updateNameTagLocation(this.player);
     }

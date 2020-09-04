@@ -2,11 +2,15 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     socketId = null;
     playerName = null;
-    shipWidth = 16;
-    shipHeight = 16;
     nameAlignX = 12;
     nameAlignY = -45;
     jumpHeight = 80;
+
+    preload() {
+        this.anims.load('walk-left');
+        this.anims.load('walk-right');
+        this.anims.load('idle');
+    }
 
     constructor(scene, socketId, x, y, rotation, playerName, colour) {
         super(scene, x, y);
@@ -21,12 +25,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
     }
 
     setShipProperties(scene) {
-        this.anims.load('walk');
         scene.physics.world.enable(this, Phaser.Physics.ARCADE);
-        scene.add.existing(this)
-            .setOrigin(0, -0.5)
-            .play('walk');
-
+        scene.add.existing(this).setOrigin(0, -0.5);
         this.body.setSize(200, 200).setOffset(0, 0);
         this.body.setCollideWorldBounds(true);
         this.body.gravity.y = 150;
@@ -37,11 +37,30 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.body.setMaxVelocity(500);
     }
 
+    moveLeft(scene) {
+        scene.physics.velocityFromRotation(this.rotation + 270, -50, this.body.acceleration);
+        this.anims.play('walk-left', true);
+    }
+
+    moveRight(scene) {
+        scene.physics.velocityFromRotation(this.rotation + 270, 50, this.body.acceleration);
+        this.anims.play('walk-right', true);
+    }
+
+    showIdleAnimation() {
+        console.log(this.body);
+        this.body.setAcceleration(0);
+        this.anims.play('idle', true);
+    }
+
     jump() {
+        console.log(this.body.y);
         this.body.y -= this.jumpHeight;
+        console.log(this.body.y);
     }
 
     isJumping() {
-        return this.body.y < 500;
+        console.log(this.body.y);
+        return this.body.y < 400;
     }
 }

@@ -21,11 +21,11 @@ export default class Player extends Phaser.GameObjects.Sprite {
     }
 
     setShipProperties(scene) {
+        this.anims.load('walk');
         scene.physics.world.enable(this, Phaser.Physics.ARCADE);
         scene.add.existing(this)
-            .setOrigin(0.5, 0.5)
-            .setDisplaySize(this.shipWidth, this.shipHeight)
-            .play('movement');
+            .setOrigin(0, -0.5)
+            .play('walk');
 
         this.body.setSize(200, 200).setOffset(0, 0);
         this.body.setCollideWorldBounds(true);

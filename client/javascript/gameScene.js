@@ -39,7 +39,7 @@ export default class GameScene extends Phaser.Scene {
         this.animationManager.initializeAnimationGroup(this);
         // Set background
         this.background = this.add.image(0, 0, "background")
-            .setOrigin(0, 0.1);
+            .setOrigin(0, 0);
         // Emit to server to start the socket connection to server
         this.socket.emit('initializeSocketConnection', this.userName);
 
@@ -48,7 +48,7 @@ export default class GameScene extends Phaser.Scene {
             Object.keys(players).forEach(function (id) {
                 if (players[id].playerId === self.socket.id) {
                     self.networkManager.addPlayer(self, id, players[id]);
-                    self.cameras.main.setBounds(0, 0, 2000, self.background.displayHeight);
+                    self.cameras.main.setBounds(0, 0, self.background.displayWidth, self.background.displayHeight);
                     self.cameras.main.startFollow(self.networkManager.player);
                 }
                 else {

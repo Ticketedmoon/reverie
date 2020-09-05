@@ -1,6 +1,5 @@
 import NetworkManager from '../management/networkManager.js';
 import ImageLoader from '../management/imageLoader.js';
-import AnimationManager from '../management/animationManager.js';
 import TextBoxManager from '../management/text-box-manager.js';
 
 export default class GameScene extends Phaser.Scene {
@@ -16,7 +15,6 @@ export default class GameScene extends Phaser.Scene {
 
     preload() {
         this.imageLoader = new ImageLoader();
-        this.animationManager = new AnimationManager();
         this.textBoxManager = new TextBoxManager();
         this.networkManager = new NetworkManager();
         this.imageLoader.loadAnimationImageSets(this);
@@ -37,14 +35,14 @@ export default class GameScene extends Phaser.Scene {
         this.otherPlayers = this.physics.add.group();
         this.otherPlayers.enableBody = true;
 
-        this.animationManager.initializePlayerAnimations(this);
         // Set background
         this.background = this.add.image(0, 0, "background")
             .setOrigin(0, 0);
 
         this.physics.world.setBounds(0, 0, this.background.width, this.background.height - 300);
+
         // Emit to server to start the socket connection to server
-        this.socket.emit('initializeSocketConnection', this.userName);
+        this.socket.emit('initializeSocketConnection', this.userName, this.characterIndex);
 
         // Update current players with new player details.
         this.socket.on('currentPlayers', function(players) {

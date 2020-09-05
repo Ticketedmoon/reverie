@@ -34,17 +34,17 @@ io.on('connection', function (socket) {
     
     players[socket.id] = {
         name: "",
-        rotation: 0,
         playerId: socket.id,
         colour: colours[0].testMode(),
         x: 0,
         y: 800,
         direction: "idle",
-        team: (Math.random() > 0.5) ? 'red' : 'blue'
+        characterIndex: null
     };
 
-    socket.on('initializeSocketConnection', function(userName) {
+    socket.on('initializeSocketConnection', function(userName, characterIndex) {
         players[socket.id].name = userName;
+        players[socket.id].characterIndex = characterIndex;
 
         // Send all player data to the new player
         socket.emit('currentPlayers', players);

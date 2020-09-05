@@ -3,11 +3,13 @@ import Player from '../entity/player.js';
 export default class NetworkManager {
 
     addPlayer(self, socketId, playerInfo) {
-        this.player = new Player(self, socketId, playerInfo.x, playerInfo.y, playerInfo.name, playerInfo.colour, playerInfo.direction);
+        this.player = new Player(self, socketId, playerInfo.x, playerInfo.y, playerInfo.name, playerInfo.colour,
+            playerInfo.direction, playerInfo.characterIndex);
     }
 
     addOtherPlayer(self, socketId, playerInfo) {
-        const otherPlayer = new Player(self, socketId, playerInfo.x, playerInfo.y, playerInfo.name, playerInfo.colour, playerInfo.direction)
+        const otherPlayer = new Player(self, socketId, playerInfo.x, playerInfo.y, playerInfo.name, playerInfo.colour,
+            playerInfo.direction, playerInfo.characterIndex);
         otherPlayer.playerId = playerInfo.playerId;
         self.otherPlayers.add(otherPlayer);
     }

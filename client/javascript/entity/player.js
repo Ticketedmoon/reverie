@@ -1,3 +1,5 @@
+import AnimationManager from "../management/animationManager.js";
+
 export default class Player extends Phaser.GameObjects.Sprite {
 
     socketId = null;
@@ -6,6 +8,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     nameAlignY = 20;
     jumpHeight = 80;
     direction = "idle";
+    characterIndex = null;
 
     preload() {
         this.anims.load('walk-left');
@@ -13,15 +16,18 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.anims.load('idle');
     }
 
-    constructor(scene, socketId, x, y, playerName, colour, direction) {
+    constructor(scene, socketId, x, y, playerName, colour, direction, characterIndex) {
         super(scene, x, y);
         this.socketId = socketId;
         this.playerName = playerName;
         this.colour = colour;
         this.direction = direction;
+        this.characterIndex = characterIndex;
 
         let style = { font: "16px Calibri, Arial", fill: colour, wordWrap: true, align: "center", stroke: '#000000', strokeThickness: 1 };
         this.entityText = scene.add.text(x - this.nameAlignX, y + this.nameAlignY, playerName, style);
+        this.animationManager = new AnimationManager();
+        this.animationManager.initializePlayerAnimations(scene, this);
         this.setPlayerProperties(scene);
     }
 

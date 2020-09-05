@@ -160,8 +160,23 @@ h2 {
 .character-select-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    grid-gap: 2em;
     width: 50%;
     margin: 0 auto;
+}
+
+.character-select-grid > div > p {
+    color: white;
+    text-shadow: 0 0 black;
+    text-align: center;
+    font-family: monospace;
+    font-size: 1.2em;
+}
+
+.character-select-grid > div:hover {
+    cursor: pointer;
+    background-color: #424242;
+
 }
 
 .login-text-box > input {
@@ -214,14 +229,14 @@ li {
     color: white;
 }
 
-.login-text-button, .enter-world-text-button {
+.login-text-button {
     padding-top: 1em;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-#login-button, #enter-world-button {
+#login-button {
     width: 200px;
     height: 40px;
     font-family: 'Roboto', sans-serif;
@@ -238,7 +253,7 @@ li {
     outline: none;
 }
 
-#login-button:hover, #enter-world-button:hover {
+#login-button:hover {
     background-color: rgb(0, 194, 23);
     box-shadow: 0 5px 10px rgba(21, 253, 0, 0.4);
     color: #fff;

@@ -25,20 +25,18 @@ export default class CharacterSelectScene extends Phaser.Scene {
     create() {
         let self = this;
         $('.character-select-interface').show();
-        $('#enter-world-button').click(() => {
-            self.enterWorld(self);
-        });
     }
 
     setCallbackForCharacterSelect(elementId, index) {
+        let scene = this;
         $(elementId).click(() => {
             this.characterIndex = index;
+            scene.enterWorld(scene);
         });
     }
 
     enterWorld(self) {
         $('.character-select-interface').hide();
-        console.log(this.characterIndex);
         self.scene.start('game', {
             name: this.userName,
             characterIndex: this.characterIndex

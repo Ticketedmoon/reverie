@@ -40,21 +40,22 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.body.setMaxVelocity(500);
     }
 
-    moveLeft(scene) {
+    moveLeft() {
         this.direction = "left";
-        scene.physics.velocityFromRotation(270, -50, this.body.acceleration);
+        this.body.setVelocityX(-200); // mov
         this.anims.play('walk-left', true);
     }
 
-    moveRight(scene) {
+    moveRight() {
         this.direction = "right";
-        scene.physics.velocityFromRotation(270, 50, this.body.acceleration);
+        this.body.setVelocityX(200); // mov
         this.anims.play('walk-right', true);
     }
 
     showIdleAnimation() {
         this.direction = "idle";
         this.body.setAcceleration(0);
+        this.body.setVelocityX(0); // mov
         this.anims.play('idle', true);
     }
 

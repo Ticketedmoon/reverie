@@ -14,10 +14,10 @@ export default class NetworkManager {
 
     checkForPlayerMovement(scene) {
         if (scene.cursors.left.isDown) {
-            this.player.moveLeft(scene);
+            this.player.moveLeft();
         }
         if (scene.cursors.right.isDown) {
-            this.player.moveRight(scene);
+            this.player.moveRight();
         }
 
         if (scene.cursors.up.isDown && !this.player.isJumping()) {

@@ -48,7 +48,7 @@ export default class GameScene extends Phaser.Scene {
             Object.keys(players).forEach(function (id) {
                 if (players[id].playerId === self.socket.id) {
                     self.networkManager.addPlayer(self, id, players[id]);
-                    self.cameras.main.setBounds(0, 0, self.background.displayWidth, self.background.displayHeight);
+                    self.cameras.main.removeBounds()
                     self.cameras.main.startFollow(self.networkManager.player);
                 }
                 else {
@@ -97,6 +97,7 @@ export default class GameScene extends Phaser.Scene {
         if (this.networkManager.player) {
             this.networkManager.checkForPlayerMovement(this);
             this.networkManager.publishPlayerMovement(this);
+            this.cameras.main.setScroll(0, 0);
         }
     }
 }

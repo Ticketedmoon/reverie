@@ -7,13 +7,14 @@ export default class GameConfig {
         return {
             type: Phaser.AUTO,
             parent: 'phaser-canvas',
-            width: 1200,
-            height: 600,
             url: null,
             version: "0.0.2",
             fps: 30,
+            width: 1200,
+            height: 600,
+
             scale: {
-                autoCenter: Phaser.Scale.FIT
+                autoCenter: Phaser.Scale.FIT,
             },
 
             physics: {

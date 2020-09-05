@@ -13,6 +13,7 @@ export default class LoginScene extends Phaser.Scene {
         let self = this;
 
         // Show
+        $('.character-select-interface').hide();
         $('.login-screen-interface').show();
 
         // Focus
@@ -43,7 +44,7 @@ export default class LoginScene extends Phaser.Scene {
             $('.login-screen-interface').hide();
 
             // Start game scene
-            self.scene.start('game', nameValue);
+            self.scene.start('character-select', nameValue);
         }
         else {
             // Display warning text specifying that a name value has not been submitted.

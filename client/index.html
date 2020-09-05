@@ -1,7 +1,5 @@
-<!-- Include Phaser Framework via CDN -->
 <!DOCTYPE html>
 <html>
- 
     <head>
         <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="stylesheets/style.css"/>
@@ -10,8 +8,9 @@
         <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Russo+One&display=swap" rel="stylesheet">
         <meta charset="utf-8">
+        <title> Outside of Time </title>
     </head>
- 
+
     <body>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.17.0/phaser.js"></script>
@@ -31,7 +30,29 @@
                             <input id="login-name" placeholder="Username" type="text" name="text-box" />
                         </div>
                         <div class="login-text-button login">
-                            <button id="login-button"> Join Game </button>
+                            <button id="login-button"> Continue </button>
+                        </div>
+                    </div>
+                    <div class="character-select-interface">
+                        <div class="game-title">
+                            <h2> Choose your character </h2>
+                        </div>
+                        <div class="character-select-grid">
+                            <div id="golden-armoured-knight">
+                                <img src="assets/player/golden-armoured-knight.png"/>
+                            </div>
+                            <div id="chain-mail-knight">
+                                <img src="assets/player/chain-mail-armour-knight.png"/>
+                            </div>
+                            <div id="plate-armour-knight">
+                                <img src="assets/player/plate-armour-knight.png"/>
+                            </div>
+                            <div id="green-leather-rogue">
+                                <img src="assets/player/green-leather-rogue.png"/>
+                            </div>
+                        </div>
+                        <div class="enter-world-text-button login">
+                            <button id="enter-world-button"> Enter world </button>
                         </div>
                     </div>
                     <div class="chat-container">

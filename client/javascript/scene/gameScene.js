@@ -9,8 +9,9 @@ export default class GameScene extends Phaser.Scene {
         super('game');
     }
 
-    init(name) {
-        this.userName = name;
+    init(data) {
+        this.userName = data.name;
+        this.characterIndex = data.characterIndex;
     }
 
     preload() {
@@ -36,12 +37,12 @@ export default class GameScene extends Phaser.Scene {
         this.otherPlayers = this.physics.add.group();
         this.otherPlayers.enableBody = true;
 
-        this.animationManager.initializeAnimationGroup(this);
+        this.animationManager.initializePlayerAnimations(this);
         // Set background
         this.background = this.add.image(0, 0, "background")
             .setOrigin(0, 0);
 
-        this.physics.world.setBounds(0, 0, this.background.width, this.background.height - 65);
+        this.physics.world.setBounds(0, 0, this.background.width, this.background.height - 300);
         // Emit to server to start the socket connection to server
         this.socket.emit('initializeSocketConnection', this.userName);
 
@@ -99,7 +100,6 @@ export default class GameScene extends Phaser.Scene {
         if (this.networkManager.player) {
             this.networkManager.checkForPlayerMovement(this);
             this.networkManager.publishPlayerMovement(this);
-            this.cameras.main.setScroll(0, 0);
         }
     }
 }

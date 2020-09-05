@@ -65,6 +65,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
     }
 
     isJumping() {
-        return this.body.y < 568;
+        return this.body.y < 872.8;
     }
 }

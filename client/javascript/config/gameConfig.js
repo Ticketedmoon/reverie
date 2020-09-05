@@ -1,5 +1,6 @@
 import LoginScene from '../scene/loginScene.js';
 import GameScene from '../scene/gameScene.js';
+import CharacterSelectScene from "../scene/CharacterSelectScene.js";
 
 export default class GameConfig {
 
@@ -27,6 +28,7 @@ export default class GameConfig {
 
             scene: [
                 LoginScene,
+                CharacterSelectScene,
                 GameScene
             ],
         };

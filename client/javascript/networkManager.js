@@ -3,11 +3,11 @@ import Player from './player.js';
 export default class NetworkManager {
 
     addPlayer(self, socketId, playerInfo) {
-        this.player = new Player(self, socketId, playerInfo.x, playerInfo.y, playerInfo.rotation, playerInfo.name, playerInfo.colour);
+        this.player = new Player(self, socketId, playerInfo.x, playerInfo.y, playerInfo.name, playerInfo.colour, playerInfo.direction);
     }
 
     addOtherPlayer(self, socketId, playerInfo) {
-        const otherPlayer = new Player(self, socketId, playerInfo.x, playerInfo.y, playerInfo.rotation, playerInfo.name, playerInfo.colour)
+        const otherPlayer = new Player(self, socketId, playerInfo.x, playerInfo.y, playerInfo.name, playerInfo.colour, playerInfo.direction)
         otherPlayer.playerId = playerInfo.playerId;
         self.otherPlayers.add(otherPlayer);
     }
@@ -37,22 +37,37 @@ export default class NetworkManager {
     publishPlayerMovement(self) {
         const x = this.player.x;
         const y = this.player.y;
-        const r = this.player.rotation;
 
-        if (this.player.oldPosition && (x !== this.player.oldPosition.x || y !== this.player.oldPosition.y || r !== this.player.oldPosition.rotation)) {
-            self.socket.emit('playerMovement', { x: this.player.x, y: this.player.y, rotation: this.player.rotation });
+        if (this.player.oldPosition && (x !== this.player.oldPosition.x || y !== this.player.oldPosition.y)) {
+            if (this.player.oldPosition.x < this.player.x) {
+                self.socket.emit('playerMovement', {x: this.player.x, y: this.player.y, direction: "right"});
+            } else if (this.player.oldPosition.x > this.player.x) {
+                self.socket.emit('playerMovement', {x: this.player.x, y: this.player.y, direction: "left"});
+            }
+        } else {
+            self.socket.emit('playerMovement', {x: this.player.x, y: this.player.y, direction: "idle"});
         }
-        
+
         // save old position data
         this.player.oldPosition = {
             x: this.player.x,
-            y: this.player.y,
-            rotation: this.player.rotation,
+            y: this.player.y
         };
     }
 
     updateNameTagLocation(player) {
         player.entityText.x = player.x - player.nameAlignX;
         player.entityText.y = player.y + player.nameAlignY;
+    }
+
+    checkForOtherPlayerMovement(otherPlayer) {
+        if (otherPlayer.direction === "left" && otherPlayer.oldDirection !== otherPlayer.direction) {
+            otherPlayer.anims.play('walk-left');
+        } else if (otherPlayer.direction === "right" && otherPlayer.oldDirection !== otherPlayer.direction) {
+            otherPlayer.anims.play('walk-right');
+        } else if (otherPlayer.direction === "idle") {
+            otherPlayer.anims.play('idle');
+        }
+        otherPlayer.oldDirection = otherPlayer.direction;
     }
 }

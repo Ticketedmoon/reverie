@@ -2,9 +2,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     socketId = null;
     playerName = null;
-    nameAlignX = -15;
+    nameAlignX = -12;
     nameAlignY = 20;
     jumpHeight = 80;
+    direction = "idle";
 
     preload() {
         this.anims.load('walk-left');
@@ -12,23 +13,24 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.anims.load('idle');
     }
 
-    constructor(scene, socketId, x, y, rotation, playerName, colour) {
+    constructor(scene, socketId, x, y, playerName, colour, direction) {
         super(scene, x, y);
-        this.rotation = rotation;
         this.socketId = socketId;
         this.playerName = playerName;
         this.colour = colour;
+        this.direction = direction;
 
-        let style = { font: "13px Calibri, Arial", fill: colour, wordWrap: true, align: "center", stroke: '#000000', strokeThickness: 1 };
+        let style = { font: "16px Calibri, Arial", fill: colour, wordWrap: true, align: "center", stroke: '#000000', strokeThickness: 1 };
         this.entityText = scene.add.text(x - this.nameAlignX, y + this.nameAlignY, playerName, style);
-        this.setShipProperties(scene);
+        this.setPlayerProperties(scene);
     }
 
-    setShipProperties(scene) {
+    setPlayerProperties(scene) {
         scene.physics.world.enable(this, Phaser.Physics.ARCADE);
         scene.add.existing(this)
             .setScale(0.85, 0.85)
-            .setOrigin(0, -0.5);
+            .setOrigin(0, -0.5)
+            .play('idle');
         this.body.setCollideWorldBounds(true);
         this.body.gravity.y = 500;
         this.body.setBounce(0.25);
@@ -39,22 +41,25 @@ export default class Player extends Phaser.GameObjects.Sprite {
     }
 
     moveLeft(scene) {
-        scene.physics.velocityFromRotation(this.rotation + 270, -50, this.body.acceleration);
+        this.direction = "left";
+        scene.physics.velocityFromRotation(270, -50, this.body.acceleration);
         this.anims.play('walk-left', true);
     }
 
     moveRight(scene) {
-        scene.physics.velocityFromRotation(this.rotation + 270, 50, this.body.acceleration);
+        this.direction = "right";
+        scene.physics.velocityFromRotation(270, 50, this.body.acceleration);
         this.anims.play('walk-right', true);
     }
 
     showIdleAnimation() {
-        console.log(this.body.y);
+        this.direction = "idle";
         this.body.setAcceleration(0);
         this.anims.play('idle', true);
     }
 
     jump() {
+        this.direction = "jump";
         this.body.y -= this.jumpHeight;
     }
 

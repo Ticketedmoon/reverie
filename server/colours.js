@@ -20,6 +20,10 @@ Colours.names = {
     14: "#FFFF33"
 };
 
+Colours.testMode = function() {
+    return "#44ff00";
+};
+
 // Colours random selection
 Colours.random = function() {
     return this.names[Math.ceil(Math.random() * 14)];

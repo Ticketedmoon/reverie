@@ -36,9 +36,10 @@ io.on('connection', function (socket) {
         name: "",
         rotation: 0,
         playerId: socket.id,
-        colour: colours[0].random(),
+        colour: colours[0].testMode(),
         x: 0,
         y: 800,
+        direction: "idle",
         team: (Math.random() > 0.5) ? 'red' : 'blue'
     };
 
@@ -65,7 +66,7 @@ io.on('connection', function (socket) {
     socket.on('playerMovement', function (movementData) {
         players[socket.id].x = movementData.x;
         players[socket.id].y = movementData.y;
-        players[socket.id].rotation = movementData.rotation;
+        players[socket.id].direction = movementData.direction;
 
         // emit a message to all players about the player that moved
         socket.broadcast.emit('playerMoved', players[socket.id]);

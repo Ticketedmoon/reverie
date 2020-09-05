@@ -23,7 +23,7 @@ export default class NetworkManager {
         }
 
         if (scene.cursors.up.isDown && !this.player.isJumping()) {
-            this.player.jump();
+            this.player.jump(scene);
         }
 
         if (scene.cursors.down.isDown) {

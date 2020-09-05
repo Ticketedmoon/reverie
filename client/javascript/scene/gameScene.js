@@ -41,16 +41,22 @@ export default class GameScene extends Phaser.Scene {
 
         this.physics.world.setBounds(0, 0, this.background.width, this.background.height - 300);
 
+        let platforms = this.physics.add.staticGroup();
+        platforms.create(1300, 800, 'platform');
+        platforms.create(1500, 700, 'platform');
+        platforms.create(1700, 600, 'platform');
+
         // Emit to server to start the socket connection to server
         this.socket.emit('initializeSocketConnection', this.userName, this.characterIndex);
 
         // Update current players with new player details.
-        this.socket.on('currentPlayers', function(players) {
+        this.socket.on('currentPlayers', function (players) {
             Object.keys(players).forEach(function (id) {
                 if (players[id].playerId === self.socket.id) {
                     self.networkManager.addPlayer(self, id, players[id]);
                     self.cameras.main.setBounds(0, 0, self.background.width, self.background.height);
                     self.cameras.main.startFollow(self.networkManager.player);
+                    self.physics.add.collider(self.networkManager.player, platforms);
                 } else {
                     self.networkManager.addOtherPlayer(self, id, players[id]);
                 }
@@ -58,17 +64,17 @@ export default class GameScene extends Phaser.Scene {
         });
 
         // Update new player with all other current player details.
-        this.socket.on('newPlayer', function(id, playerInfo) {
+        this.socket.on('newPlayer', function (id, playerInfo) {
             self.networkManager.addOtherPlayer(self, id, playerInfo);
         });
 
         // Connect user to chat
-        this.socket.on('chatUpdate', function(message, colour, userName) {
+        this.socket.on('chatUpdate', function (message, colour, userName) {
             self.textBoxManager.updateChatLog(message, colour, userName);
         });
 
         // Remove player from otherPlayers group if disconnect.
-        this.socket.on('disconnect', function(playerId) {
+        this.socket.on('disconnect', function (playerId) {
             self.otherPlayers.getChildren().forEach(function (otherPlayer) {
                 if (playerId === otherPlayer.playerId) {
                     otherPlayer.destroy();

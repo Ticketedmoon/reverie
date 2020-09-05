@@ -6,7 +6,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
     playerName = null;
     nameAlignX = -10.5;
     nameAlignY = 20;
-    jumpHeight = 80;
+    jumpHeight = 150;
+    canJumpAgain = true;
     direction = "idle";
     characterIndex = null;
 
@@ -62,12 +63,18 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.anims.play('idle-' + this.socketId, true);
     }
 
-    jump() {
+    jump(scene) {
         this.direction = "jump";
         this.body.y -= this.jumpHeight;
+        this.canJumpAgain = false;
+        scene.time.delayedCall(1000, this.resetJump, [this], null);
+    }
+
+    resetJump(player) {
+        player.canJumpAgain = true;
     }
 
     isJumping() {
-        return this.body.y < 872.8;
+        return !this.canJumpAgain;
     }
 }

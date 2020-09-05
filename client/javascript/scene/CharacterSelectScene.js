@@ -23,7 +23,6 @@ export default class CharacterSelectScene extends Phaser.Scene {
     }
 
     create() {
-        let self = this;
         $('.character-select-interface').show();
     }
 

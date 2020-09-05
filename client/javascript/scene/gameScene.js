@@ -51,8 +51,7 @@ export default class GameScene extends Phaser.Scene {
                     self.networkManager.addPlayer(self, id, players[id]);
                     self.cameras.main.setBounds(0, 0, self.background.width, self.background.height);
                     self.cameras.main.startFollow(self.networkManager.player);
-                }
-                else {
+                } else {
                     self.networkManager.addOtherPlayer(self, id, players[id]);
                 }
             });

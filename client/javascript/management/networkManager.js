@@ -64,11 +64,11 @@ export default class NetworkManager {
 
     checkForOtherPlayerMovement(otherPlayer) {
         if (otherPlayer.direction === "left" && otherPlayer.oldDirection !== otherPlayer.direction) {
-            otherPlayer.anims.play('walk-left');
+            otherPlayer.anims.play('walk-left-' + otherPlayer.socketId);
         } else if (otherPlayer.direction === "right" && otherPlayer.oldDirection !== otherPlayer.direction) {
-            otherPlayer.anims.play('walk-right');
+            otherPlayer.anims.play('walk-right-' + otherPlayer.socketId);
         } else if (otherPlayer.direction === "idle") {
-            otherPlayer.anims.play('idle');
+            otherPlayer.anims.play('idle-' + otherPlayer.socketId);
         }
         otherPlayer.oldDirection = otherPlayer.direction;
     }

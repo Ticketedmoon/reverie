@@ -10,22 +10,19 @@ export default class Player extends Phaser.GameObjects.Sprite {
     direction = "idle";
     characterIndex = null;
 
-    preload() {
-        this.anims.load('walk-left');
-        this.anims.load('walk-right');
-        this.anims.load('idle');
-    }
-
     constructor(scene, socketId, x, y, playerName, colour, direction, characterIndex) {
         super(scene, x, y);
         this.socketId = socketId;
         this.playerName = playerName;
-        this.colour = colour;
         this.direction = direction;
         this.characterIndex = characterIndex;
 
         let style = { font: "16px Calibri, Arial", fill: colour, wordWrap: true, align: "center", stroke: '#000000', strokeThickness: 1 };
         this.entityText = scene.add.text(x - this.nameAlignX, y + this.nameAlignY, playerName, style);
+
+        this.anims.load('walk-left-' + socketId);
+        this.anims.load('walk-right-' + socketId);
+        this.anims.load('idle-' + socketId);
         this.animationManager = new AnimationManager();
         this.animationManager.initializePlayerAnimations(scene, this);
         this.setPlayerProperties(scene);
@@ -36,7 +33,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         scene.add.existing(this)
             .setScale(0.85, 0.85)
             .setOrigin(0, -0.5)
-            .play('idle');
+            .play('idle-' + this.socketId);
         this.body.setCollideWorldBounds(true);
         this.body.gravity.y = 500;
         this.body.setBounce(0.25);
@@ -49,20 +46,20 @@ export default class Player extends Phaser.GameObjects.Sprite {
     moveLeft() {
         this.direction = "left";
         this.body.setVelocityX(-200); // mov
-        this.anims.play('walk-left', true);
+        this.anims.play('walk-left-' + this.socketId, true);
     }
 
     moveRight() {
         this.direction = "right";
         this.body.setVelocityX(200); // mov
-        this.anims.play('walk-right', true);
+        this.anims.play('walk-right-' + this.socketId, true);
     }
 
     showIdleAnimation() {
         this.direction = "idle";
         this.body.setAcceleration(0);
         this.body.setVelocityX(0); // mov
-        this.anims.play('idle', true);
+        this.anims.play('idle-' + this.socketId, true);
     }
 
     jump() {

@@ -1,5 +1,5 @@
-import LoginScene from './loginScene.js';
-import GameScene from './gameScene.js';
+import LoginScene from '../scene/loginScene.js';
+import GameScene from '../scene/gameScene.js';
 
 export default class GameConfig {
 

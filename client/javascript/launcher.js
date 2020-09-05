@@ -1,4 +1,4 @@
-import GameConfig from './gameConfig.js';
+import GameConfig from './config/gameConfig.js';
 
 class Launcher {
     initialize() {

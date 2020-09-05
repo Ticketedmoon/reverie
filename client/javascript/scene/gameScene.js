@@ -1,7 +1,7 @@
-import NetworkManager from './networkManager.js';
-import ImageLoader from './imageLoader.js';
-import AnimationManager from './animationManager.js';
-import TextBoxManager from './text-box-manager.js';
+import NetworkManager from '../management/networkManager.js';
+import ImageLoader from '../management/imageLoader.js';
+import AnimationManager from '../management/animationManager.js';
+import TextBoxManager from '../management/text-box-manager.js';
 
 export default class GameScene extends Phaser.Scene {
 

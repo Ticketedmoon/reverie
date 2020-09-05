@@ -2,7 +2,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     socketId = null;
     playerName = null;
-    nameAlignX = -12;
+    nameAlignX = -10.5;
     nameAlignY = 20;
     jumpHeight = 80;
     direction = "idle";

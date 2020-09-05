@@ -1,4 +1,4 @@
-import Player from './player.js';
+import Player from '../entity/player.js';
 
 export default class NetworkManager {
 

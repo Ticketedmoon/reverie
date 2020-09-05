@@ -10,11 +10,11 @@ export default class GameConfig {
             url: null,
             version: "0.0.2",
             fps: 30,
-            width: 1200,
-            height: 600,
 
             scale: {
-                autoCenter: Phaser.Scale.FIT,
+                autoCenter: Phaser.Scale.CENTER_BOTH,
+                width: 1200,
+                height: 600
             },
 
             physics: {

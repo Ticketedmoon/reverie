@@ -12,7 +12,7 @@ export default class AnimationManager {
         } else if (player.characterIndex === 3) {
             this.initializeAnimationGroup(scene, player,21, 23, 33, 35, 10)
         } else {
-            throw "Character not selected correctly - error";
+            throw "Character not selected correctly - error - character index: " + player.characterIndex;
         }
     }
 
@@ -23,28 +23,28 @@ export default class AnimationManager {
                 walkRight: 'walk-right-' + player.socketId,
                 idle: 'idle-' + player.socketId
             });
-            this.initializeWalkLeftAnimation(scene, player, leftStart, leftEnd);
-            this.initializeWalkRightAnimation(scene, player, rightStart, rightEnd)
-            this.initializeWalkIdleAnimation(scene, player, idlePos);
+            this.initializeWalkLeftAnimation(scene, this.playerSocketToAnimNameMap.get(player.socketId).walkLeft, leftStart, leftEnd, 4);
+            this.initializeWalkRightAnimation(scene, this.playerSocketToAnimNameMap.get(player.socketId).walkRight, rightStart, rightEnd, 4)
+            this.initializeWalkIdleAnimation(scene, this.playerSocketToAnimNameMap.get(player.socketId).idle, idlePos, 4);
         }
     }
 
-    initializeWalkLeftAnimation(scene, player, start, end) {
+    initializeWalkLeftAnimation(scene, key, start, end, frameRate) {
         let config = {
-            key: this.playerSocketToAnimNameMap.get(player.socketId).walkLeft,
+            key: key,
             frames: scene.anims.generateFrameNumbers('player_anim_1', { start: start, end: end }),
-            frameRate: 4,
+            frameRate: frameRate,
             yoyo: false,
             repeat: -1
         };
         scene.anims.create(config);
     }
 
-    initializeWalkRightAnimation(scene, player, start, end) {
+    initializeWalkRightAnimation(scene, key, start, end, frameRate) {
         let config = {
-            key: this.playerSocketToAnimNameMap.get(player.socketId).walkRight,
+            key: key,
             frames: scene.anims.generateFrameNumbers('player_anim_1', { start: start, end: end }),
-            frameRate: 4,
+            frameRate: frameRate,
             yoyo: false,
             repeat: -1
         };
@@ -52,11 +52,11 @@ export default class AnimationManager {
     }
 
     // TODO: Currently this isn't an animation, just an image.
-    initializeWalkIdleAnimation(self, player, value) {
+    initializeWalkIdleAnimation(self, key, value, frameRate) {
         let config = {
-            key: this.playerSocketToAnimNameMap.get(player.socketId).idle,
+            key: key,
             frames: self.anims.generateFrameNumbers('player_anim_1', { start: value, end: value }),
-            frameRate: 4,
+            frameRate: frameRate,
             yoyo: false,
             repeat: -1
         };

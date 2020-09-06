@@ -7,6 +7,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     nameAlignX = -10.5;
     nameAlignY = 20;
     jumpHeight = 150;
+    velocityX = 200;
     canJumpAgain = true;
     direction = "idle";
     characterIndex = null;
@@ -23,6 +24,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
         this.anims.load('walk-left-' + socketId);
         this.anims.load('walk-right-' + socketId);
+        this.anims.load('sprint-left-' + socketId);
+        this.anims.load('sprint-right-' + socketId);
         this.anims.load('idle-' + socketId);
         this.animationManager = new AnimationManager();
         this.animationManager.initializePlayerAnimations(scene, this);
@@ -45,15 +48,28 @@ export default class Player extends Phaser.GameObjects.Sprite {
     }
 
     moveLeft() {
-        this.direction = "left";
-        this.body.setVelocityX(-200); // mov
+        this.setDirection("left")
+        this.body.setVelocityX(-this.velocityX); // mov
         this.anims.play('walk-left-' + this.socketId, true);
     }
 
     moveRight() {
-        this.direction = "right";
-        this.body.setVelocityX(200); // mov
+        this.setDirection("right");
+        this.body.setVelocityX(this.velocityX); // mov
         this.anims.play('walk-right-' + this.socketId, true);
+    }
+
+    setDirection(direction) {
+        this.direction = direction;
+    }
+
+    sprint() {
+        if (this.direction === "left") {
+            this.body.setVelocityX(1.5 * -this.velocityX);
+        } else if (this.direction === "right") {
+            this.body.setVelocityX(1.5 * this.velocityX);
+        }
+        this.anims.msPerFrame = 128;
     }
 
     showIdleAnimation() {

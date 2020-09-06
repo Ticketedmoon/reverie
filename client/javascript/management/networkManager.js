@@ -36,6 +36,7 @@ export default class NetworkManager {
         if (!scene.cursors.left.isDown && !scene.cursors.right.isDown && !scene.cursors.up.isDown && !scene.cursors.down.isDown) {
             this.player.showIdleAnimation();
         }
+
         this.updateNameTagLocation(this.player);
     }
 

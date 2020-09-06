@@ -70,7 +70,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         } else if (this.direction === "right") {
             this.body.setVelocityX(1.5 * this.velocityX);
         }
-        this.anims.msPerFrame = sprintRateByMs;
+        this.anims.msPerFrame = this.sprintRateByMs;
     }
 
     showIdleAnimation() {

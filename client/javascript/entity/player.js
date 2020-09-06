@@ -8,6 +8,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
     nameAlignY = 20;
     jumpHeight = 1000;
     velocityX = 200;
+    gravityY = 500;
+    canJump = true;
     sprintRateByMs = 128;
     direction = "idle";
     characterIndex = null;
@@ -39,7 +41,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
             .setOrigin(0, -0.5)
             .play('idle-' + this.socketId);
         this.body.setCollideWorldBounds(true);
-        this.body.gravity.y = 800;
+        this.body.gravity.y = this.gravityY;
         this.body.setBounce(0.25);
 
         this.body.setDrag(100);
@@ -79,8 +81,18 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.anims.play('idle-' + this.socketId, true);
     }
 
-    jump() {
-        this.direction = "jump";
-        this.body.velocity.y -= this.jumpHeight;
+    jump(scene) {
+        if (this.canJump) {
+            this.direction = "jump";
+            this.body.velocity.y -= this.jumpHeight;
+            this.canJump = false;
+            scene.time.delayedCall(1000, () => {
+                this.canJump = true;
+            }, [this], null);  // delay in ms
+        }
+    }
+
+    onFloor() {
+        return this.body.velocity.y < 0;
     }
 }

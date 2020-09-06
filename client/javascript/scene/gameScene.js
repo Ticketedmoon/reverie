@@ -41,11 +41,24 @@ export default class GameScene extends Phaser.Scene {
 
         this.physics.world.setBounds(0, 0, this.background.width, this.background.height - 300);
 
-        let platforms = this.physics.add.staticGroup();
-        platforms.create(1300, 800, 'platform');
-        platforms.create(1500, 700, 'platform');
-        platforms.create(1700, 600, 'platform');
+        let staticPlatforms = this.physics.add.staticGroup();
+        staticPlatforms.create(1300, 800, 'platform');
+        staticPlatforms.create(1500, 700, 'platform');
+        staticPlatforms.create(1700, 600, 'platform');
 
+        let dynamicPlatforms = this.physics.add.group({
+            key: 'platform',
+            frameQuantity: 3,
+            setXY: { x: 1500, y: 0, stepX: 300, stepY: 200 },
+            velocityX: 10,
+            immovable: true
+        });
+
+        dynamicPlatforms.getChildren()[0].setFrictionX(1);
+        dynamicPlatforms.getChildren()[1].setFrictionX(1);
+        dynamicPlatforms.getChildren()[2].setFrictionX(1);
+
+        console.log(dynamicPlatforms);
         this.add.text(1600, 200, "If you see this, you're a gimp");
 
         // Emit to server to start the socket connection to server
@@ -58,7 +71,9 @@ export default class GameScene extends Phaser.Scene {
                     self.networkManager.addPlayer(self, id, players[id]);
                     self.cameras.main.setBounds(0, 0, self.background.width, self.background.height);
                     self.cameras.main.startFollow(self.networkManager.player);
-                    self.physics.add.collider(self.networkManager.player, platforms);
+                    self.physics.add.collider(self.networkManager.player, staticPlatforms);
+                    self.physics.add.collider(self.networkManager.player, dynamicPlatforms);
+                    self.createMovingPlatforms(dynamicPlatforms, self);
                 } else {
                     self.networkManager.addOtherPlayer(self, id, players[id]);
                 }
@@ -98,6 +113,24 @@ export default class GameScene extends Phaser.Scene {
         });
         // Initialize default ship cursor key inputs
         this.cursors = this.input.keyboard.addKeys('up, down, left, right, shift');
+    }
+
+    createMovingPlatforms(dynamicPlatforms, self) {
+        dynamicPlatforms.children.iterate(function (child) {
+            self.configurePlatformAnimation(self, child);
+        });
+    }
+
+    configurePlatformAnimation(self, child) {
+        self.tweens.add({
+            targets: child,
+            x: 50,
+            duration: 10000,
+            ease: 'Linear',
+            repeat: -1,
+            delay: 1000,
+            yoyo: true
+        });
     }
 
     update() {

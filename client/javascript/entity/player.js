@@ -9,7 +9,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
     jumpHeight = 150;
     velocityX = 200;
     sprintRateByMs = 128;
-    canJumpAgain = true;
     direction = "idle";
     characterIndex = null;
 
@@ -80,18 +79,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.anims.play('idle-' + this.socketId, true);
     }
 
-    jump(scene) {
+    jump() {
         this.direction = "jump";
         this.body.y -= this.jumpHeight;
-        this.canJumpAgain = false;
-        scene.time.delayedCall(1000, this.resetJump, [this], null);
-    }
-
-    resetJump(player) {
-        player.canJumpAgain = true;
-    }
-
-    isJumping() {
-        return !this.canJumpAgain;
     }
 }

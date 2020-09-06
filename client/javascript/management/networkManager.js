@@ -25,8 +25,8 @@ export default class NetworkManager {
             this.player.sprint();
         }
 
-        if (scene.cursors.up.isDown && !this.player.isJumping()) {
-            this.player.jump(scene);
+        if (scene.cursors.up.isDown && this.player.body.onFloor()) {
+            this.player.jump();
         }
 
         if (scene.cursors.down.isDown) {

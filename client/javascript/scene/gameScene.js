@@ -46,6 +46,8 @@ export default class GameScene extends Phaser.Scene {
         platforms.create(1500, 700, 'platform');
         platforms.create(1700, 600, 'platform');
 
+        this.add.text(1600, 200, "If you see this, you're a gimp");
+
         // Emit to server to start the socket connection to server
         this.socket.emit('initializeSocketConnection', this.userName, this.characterIndex);
 

@@ -8,6 +8,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     nameAlignY = 20;
     jumpHeight = 150;
     velocityX = 200;
+    sprintRateByMs = 128;
     canJumpAgain = true;
     direction = "idle";
     characterIndex = null;
@@ -69,7 +70,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         } else if (this.direction === "right") {
             this.body.setVelocityX(1.5 * this.velocityX);
         }
-        this.anims.msPerFrame = 128;
+        this.anims.msPerFrame = sprintRateByMs;
     }
 
     showIdleAnimation() {

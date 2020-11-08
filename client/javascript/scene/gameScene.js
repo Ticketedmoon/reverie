@@ -58,9 +58,6 @@ export default class GameScene extends Phaser.Scene {
         dynamicPlatforms.getChildren()[1].setFrictionX(1);
         dynamicPlatforms.getChildren()[2].setFrictionX(1);
 
-        console.log(dynamicPlatforms);
-        this.add.text(1600, 200, "If you see this, you're a gimp");
-
         // Emit to server to start the socket connection to server
         this.socket.emit('initializeSocketConnection', this.userName, this.characterIndex);
 

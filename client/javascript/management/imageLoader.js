@@ -8,7 +8,7 @@ export default class ImageLoader {
 
     loadBackgroundAnimationImageSet(self) {
         self.load.path = 'assets/resources/background/';
-        self.load.image('background', 'background-grassy-plain.png');
+        self.load.image('background', 'background.jpg');
     }
 
     loadPlayerSpriteSheet(self) {

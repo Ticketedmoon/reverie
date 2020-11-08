@@ -22,7 +22,6 @@ export default class GameConfig {
                 default: 'arcade',
                 arcade: {
                     debug: false,
-                    gravity: {x: 0, y: 0}
                 }
             },
 

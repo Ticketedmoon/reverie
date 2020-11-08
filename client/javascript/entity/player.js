@@ -6,10 +6,9 @@ export default class Player extends Phaser.GameObjects.Sprite {
     playerName = null;
     nameAlignX = -10.5;
     nameAlignY = 20;
-    jumpHeight = 1000;
     velocityX = 200;
+    velocityY = 200;
     gravityY = 500;
-    canJump = true;
     sprintRateByMs = 128;
     direction = "idle";
     characterIndex = null;
@@ -41,11 +40,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
             .setOrigin(0, -0.5)
             .play('idle-' + this.socketId);
         this.body.setCollideWorldBounds(true);
-        this.body.gravity.y = this.gravityY;
-        this.body.setBounce(0.25);
-
-        this.body.setDrag(100);
-        this.body.setAngularDrag(100);
+        this.body.setDrag(0);
+        this.body.setAngularDrag(0);
         this.body.setMaxVelocity(500);
     }
 
@@ -59,6 +55,18 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.setDirection("right");
         this.body.setVelocityX(this.velocityX); // mov
         this.anims.play('walk-right-' + this.socketId, true);
+    }
+
+    moveUp() {
+        this.setDirection("up");
+        this.body.setVelocityY(-this.velocityY); // mov
+        this.anims.play('walk-up-' + this.socketId, true);
+    }
+
+    moveDown() {
+        this.setDirection("down");
+        this.body.setVelocityY(this.velocityY); // mov
+        this.anims.play('walk-down-' + this.socketId, true);
     }
 
     setDirection(direction) {
@@ -77,22 +85,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
     showIdleAnimation() {
         this.direction = "idle";
         this.body.setAcceleration(0);
-        this.body.setVelocityX(0); // mov
+        this.resetPlayerVelocity();
         this.anims.play('idle-' + this.socketId, true);
     }
 
-    jump(scene) {
-        if (this.canJump) {
-            this.direction = "jump";
-            this.body.velocity.y -= this.jumpHeight;
-            this.canJump = false;
-            scene.time.delayedCall(1000, () => {
-                this.canJump = true;
-            }, [this], null);  // delay in ms
-        }
-    }
-
-    onFloor() {
-        return this.body.velocity.y < 0;
+    resetPlayerVelocity() {
+        this.body.setVelocityX(0); // mov
+        this.body.setVelocityY(0); // mov
     }
 }

@@ -15,18 +15,25 @@ export default class NetworkManager {
     }
 
     checkForPlayerMovement(scene) {
+        this.player.resetPlayerVelocity();
         if (scene.cursors.left.isDown) {
             this.player.moveLeft();
         }
+
         if (scene.cursors.right.isDown) {
             this.player.moveRight();
         }
-        if (scene.cursors.shift.isDown) {
-            this.player.sprint();
+
+        if (scene.cursors.up.isDown) {
+            this.player.moveUp();
         }
 
-        if (scene.cursors.up.isDown && this.player.onFloor()) {
-            this.player.jump(scene);
+        if (scene.cursors.down.isDown) {
+            this.player.moveDown();
+        }
+
+        if (scene.cursors.shift.isDown) {
+            this.player.sprint();
         }
 
         if (scene.cursors.down.isDown) {

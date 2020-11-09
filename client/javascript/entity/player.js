@@ -4,12 +4,11 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     socketId = null;
     playerName = null;
-    nameAlignX = -10.5;
+    nameAlignX = -20;
     nameAlignY = 20;
     velocityX = 200;
     velocityY = 200;
-    gravityY = 500;
-    sprintRateByMs = 128;
+    sprintRateByMs = 176;
     direction = "idle";
     characterIndex = null;
 
@@ -21,7 +20,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.characterIndex = characterIndex;
 
         let style = { font: "16px Calibri, Arial", fill: colour, wordWrap: true, align: "center", stroke: '#000000', strokeThickness: 1 };
-        this.entityText = scene.add.text(x - this.nameAlignX, y + this.nameAlignY, playerName, style);
+        this.entityText = scene.add.text(x + this.nameAlignX, y + this.nameAlignY, playerName, style);
 
         this.anims.load('walk-left-' + socketId);
         this.anims.load('walk-right-' + socketId);
@@ -75,9 +74,13 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     sprint() {
         if (this.direction === "left") {
-            this.body.setVelocityX(1.5 * -this.velocityX);
+            this.body.setVelocityX(1.25 * -this.velocityX);
         } else if (this.direction === "right") {
-            this.body.setVelocityX(1.5 * this.velocityX);
+            this.body.setVelocityX(1.25 * this.velocityX);
+        } else if (this.direction === "up") {
+            this.body.setVelocityY(1.25 * -this.velocityY);
+        } else if (this.direction === "down") {
+            this.body.setVelocityY(1.25 * this.velocityY);
         }
         this.anims.msPerFrame = this.sprintRateByMs;
     }

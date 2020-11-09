@@ -4,11 +4,19 @@ html {
     visibility: hidden;
 }
 
+html, body {
+    height: 100%;
+}
+
+body {
+    background-color: #296d18;
+}
+
 .wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 10vh;
+    height: 100%;
 }
 
 .introduction, .information, .instructions {
@@ -21,13 +29,6 @@ html {
 canvas {
     -moz-box-shadow: 0 0 5px 5px #282a2d;
     -webkit-box-shadow: 0 0 5px 5px #282a2d;
-    margin-bottom: 1em;
-}
-
-#game-canvas {
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 #phaser-canvas {

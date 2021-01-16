@@ -36,10 +36,6 @@ export default class NetworkManager {
             this.player.sprint();
         }
 
-        if (scene.cursors.down.isDown) {
-            console.log("Cursor down pushed");
-        }
-
         if (!scene.cursors.left.isDown && !scene.cursors.right.isDown && !scene.cursors.up.isDown && !scene.cursors.down.isDown) {
             this.player.showIdleAnimation();
         }

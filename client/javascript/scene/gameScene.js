@@ -36,9 +36,14 @@ export default class GameScene extends Phaser.Scene {
         this.otherPlayers.enableBody = true;
 
         // Set background
-        this.background = this.add.image(0, 0, "background")
+        this.background = this.add.image(0, 0, "tiles")
             .setOrigin(0, 0);
 
+        const map = this.make.tilemap({ key: 'world' });
+        const tileset = map.addTilesetImage('background', 'tiles');
+        // TODO: Find out why this console log is null and when discovered, ensure collision detection from tiled is working.
+        this.backgroundLayer = map.createStaticLayer('Tile Layer 1', tileset, 0, 200);
+        console.log(this.backgroundLayer);
         this.physics.world.setBounds(0, -20, this.background.width, this.background.height);
 
         // Emit to server to start the socket connection to server

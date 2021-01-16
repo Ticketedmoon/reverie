@@ -7,8 +7,9 @@ export default class ImageLoader {
     }
 
     loadBackgroundAnimationImageSet(self) {
-        self.load.path = 'assets/resources/background/';
-        self.load.image('background', 'background.jpg');
+        self.load.path = 'assets/tiles/';
+        self.load.image('tiles', 'age-of-conquest-map-A.png');
+        self.load.tilemapTiledJSON('world', 'age-of-conquest-map-A.json');
     }
 
     loadPlayerSpriteSheet(self) {
